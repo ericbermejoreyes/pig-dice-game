@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:og="http://ogp.me/ns#"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="Pig Dice Game | Simple JS game app" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://stoic25.gitlab.io/pig-dice-game/pig-dice.png"
+    />
+    <link
+      rel="image_src"
+      href="https://stoic25.gitlab.io/pig-dice-game/pig-dice.png"
+    />
+
+    <title>Pig Dice Game | Simple JS game app</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:100,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+  </head>
+
+  <body>
+    <div class="header">
+      <nav>
+        <h1 class="title">🐷 Pig Dice Game</h1>
+        <ul>
+          <li>
+            <a href="#" id="new-game">
+              <i class="menuicon ion-refresh"></i>
+              <span class="maintext">New Game</span>
+            </a>
+          </li>
+          <li>
+            <a href="#how-to-play"
+              ><i class="menuicon ion-help"></i>
+              <span class="maintext">How To Play</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <div class="form-group">
+        <label for="winning-score">Set Winning Score: </label>
+        <input
+          type="number"
+          id="winning-score"
+          value="100"
+          placeholder="100"
+          pattern="/^-?\d+\.?\d*$/"
+          onKeyPress="if(this.value.length==3) return false;"
+        />
+      </div>
+    </div>
+
+    <div class="wrapper clearfix">
+      <div class="player-0-panel active">
+        <div class="dice-turn">
+          <span class="dice-emote">🎲</span> <span class="dice-shadow"></span>
+        </div>
+        <div class="player-name" id="name-0">Player 1</div>
+        <div class="player-score" id="score-0">43</div>
+        <div class="player-current-box">
+          <div class="player-current-label">Round Score</div>
+          <div class="player-current-score" id="current-0">11</div>
+        </div>
+      </div>
+
+      <div class="player-1-panel">
+        <div class="dice-turn">
+          <span class="dice-emote">🎲</span> <span class="dice-shadow"></span>
+        </div>
+        <div class="player-name" id="name-1">Player 2</div>
+        <div class="player-score" id="score-1">72</div>
+        <div class="player-current-box">
+          <div class="player-current-label">Round Score</div>
+          <div class="player-current-score" id="current-1">0</div>
+        </div>
+      </div>
+
+      <div class="main-commands">
+        <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
+        <button class="btn-hold">
+          <i class="ion-ios-download-outline"></i>Hold
+        </button>
+      </div>
+
+      <div class="dices-container">
+        <svg
+          class="dice dice-1"
+          data-value="1"
+          width="100px"
+          height="100px"
+          cversion="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g class="d1 dicedots">
+            <circle class="mono" cx="50%" cy="50%" r="12" fill="red" />
+            <!-- <circle class="mono" cx="50%" cy="50%" r="7" /> -->
+          </g>
+          <g class="d2 dicedots">
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+          </g>
+          <g class="d3 dicedots">
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="50%" cy="50%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+          </g>
+          <g class="d4 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+          </g>
+          <g class="d5 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+            <circle class="mono" cx="50%" cy="50%" r="7" />
+          </g>
+          <g class="d6 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+            <circle class="mono" cx="20%" cy="50%" r="7" />
+            <circle class="mono" cx="80%" cy="50%" r="7" />
+          </g>
+        </svg>
+
+        <svg
+          class="dice dice-2"
+          data-value="1"
+          width="100px"
+          height="100px"
+          cversion="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g class="d1 dicedots">
+            <circle class="mono" cx="50%" cy="50%" r="12" fill="red" />
+          </g>
+          <g class="d2 dicedots">
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+          </g>
+          <g class="d3 dicedots">
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="50%" cy="50%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+          </g>
+          <g class="d4 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+          </g>
+          <g class="d5 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+            <circle class="mono" cx="50%" cy="50%" r="7" />
+          </g>
+          <g class="d6 dicedots">
+            <circle class="mono" cx="20%" cy="20%" r="7" />
+            <circle class="mono" cx="80%" cy="20%" r="7" />
+            <circle class="mono" cx="20%" cy="80%" r="7" />
+            <circle class="mono" cx="80%" cy="80%" r="7" />
+            <circle class="mono" cx="20%" cy="50%" r="7" />
+            <circle class="mono" cx="80%" cy="50%" r="7" />
+          </g>
+        </svg>
+
+        <!-- <img src="dice-5.png" alt="Dice 2" class="dice-2" /> -->
+      </div>
+
+      <div class="new-game-win">
+        <div class="rect rect-1"></div>
+        <div class="rect rect-2"></div>
+        <span>New Game</span>
+      </div>
+    </div>
+
+    <div id="keybindings">
+      <p>
+        <span class="key-set"
+          ><span class="key-command">space bar</span> : ROLL DICE</span
+        >
+        <span class="key-set"><span class="key-command">H</span> : HOLD</span>
+      </p>
+    </div>
+
+    <a href="#_" class="lightbox-how-to-play" id="how-to-play">
+      <div class="lightbox-desc">
+        <h2>Game Rules</h2>
+        <ul>
+          <li>The game has 2 players, playing in rounds.</li>
+          <li>
+            In each turn, a player rolls a dice as many times as he whishes.
+            Each result get added to his ROUND score.
+          </li>
+          <li>
+            BUT, if the player rolls a 1, all his ROUND score gets lost. After
+            that, it's the next player's turn.
+          </li>
+          <li>
+            The player can choose to 'Hold', which means that his ROUND score
+            gets added to his MAIN score. After that, it's the next player's
+            turn.
+          </li>
+          <li>
+            The first player to reach "Winning Score (set by default to 100)"
+            points on MAIN score wins the game.
+          </li>
+        </ul>
+      </div>
+    </a>
+
+    <script src="js/countUp.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
