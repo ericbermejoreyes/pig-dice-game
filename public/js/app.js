@@ -184,6 +184,8 @@ function playerHold() {
     } else {
       console.error(mainScoreObj.error);
     }
+
+    socket.emit(getSession() + '/hold', roundScore);
   }
 
   document.querySelector(".dices-container").style.opacity = "0";
