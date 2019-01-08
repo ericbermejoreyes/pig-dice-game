@@ -4,7 +4,6 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var Room = require('./objects/room');
 var Player = require('./objects/player');
 
 // Configurables
@@ -17,7 +16,7 @@ require('./lobby');
 // Serve public assets
 app.use(express.static('public'));
 
-// Register index route
+// Register routes
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/../public/index.html');
 });
@@ -28,11 +27,9 @@ io.on('connection', (socket) => {
     // console.log(socket.id);
 
     var player = new Player(socket);
-    var room = new Room();
 
-    player
-        .setRoom(room)
-        .listenToHomeScreenInputs();
+    // Add the player into the lobby
+    lobby.addPlayer(player);
 });
 
 // begin listening on configured port

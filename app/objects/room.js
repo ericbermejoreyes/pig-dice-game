@@ -3,6 +3,9 @@ var shortid = require('shortid');
 
 // The Room object
 module.exports = function () {
+    // Reference _self to _self variable
+    var _self = _self;
+
     // Init private properties
     var id = 'rm' + shortid.generate();
     var name = null;
@@ -14,53 +17,63 @@ module.exports = function () {
 
 
     //Public getters and setters
-    this.getId = () => {
+    _self.getId = () => {
         return id;
     };
 
-    this.getName = () => {
+    _self.getName = () => {
         return name;
     };
 
-    this.setName = ($name) => {
+    _self.setName = ($name) => {
         name = $name;
+        return _self;
     };
 
-    this.getWinningScore = () => {
+    _self.getWinningScore = () => {
         return winningScore;
     };
 
-    this.setWinningScore = ($winningScore) => {
+    _self.setWinningScore = ($winningScore) => {
         winningScore = $winningScore;
+        return _self;
     };
 
-    this.addPlayer = ($player) => {
+    _self.addPlayer = ($player /*Type Player*/) => {
         if (slot <= 0) return;
         players[$player.id] = $player;
         slot--;
     };
 
-    this.removePlayer = ($player) => {
+    _self.removePlayer = ($player) => {
+        slot = slot + 1 < 2 ? slot++ : 2;
         delete players[$player.id];
+        return _self;
     };
 
-    this.getPassword = () => {
+    _self.getSlot = () => {
+        return _self.slot;
+    };
+
+    _self.getPassword = () => {
         return password;
     };
 
-    this.setPassword = ($password) => {
+    _self.setPassword = ($password) => {
         password = $password;
+        return _self;
     };
 
-    this.isPrivate = () => {
+    _self.isPrivate = () => {
         return password !== null;
     };
 
-    this.getCreator = () => {
+    _self.getCreator = () => {
         return creator;
     };
 
-    this.setCreator = ($creator /*Type Player*/) => {
+    _self.setCreator = ($creator /*Type Player*/) => {
         creator = $creator;
+        return _self;
     };
 };

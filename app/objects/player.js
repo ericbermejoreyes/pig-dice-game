@@ -1,5 +1,6 @@
 // Use libraries
 var shortId = require('shortid');
+var Room = require('./room');
 
 // The Player object
 module.exports = function ($socket) {
@@ -16,6 +17,7 @@ module.exports = function ($socket) {
     var currentSession = id;
     var room = null;
     var previousRoom = room;
+    var readyState = false;
 
     //Init private methods
     var updateClientSession = ($session) => {
@@ -91,21 +93,39 @@ module.exports = function ($socket) {
         return currentSession;
     };
 
-    // Init events
-    _self.listenToHomeScreenInputs = () => {
-        console.log(lobby);
+    _self.getReadyState = () => {
+        return readyState;
+    };
 
+    _self.setReadyState = ($flag /*boolean*/) => {
+        readyState = $flag;
+        return _self;
+    };
+
+    // Events
+    _self.listenToHomeScreenInputs = () => {
         // Update the session in client
         updateClientSession(_self.getCurrentSession());
 
         // Listen when player creates a room
         socket.on(_self.getId() + '/createRoom', ($roomName) => {
+            var room = new Room();
+            room
+                .setCreator(_self)
+                .addPlayer(_self);
+            _self.setRoom(room);
+            lobby.addRoom(room);
 
+            // Listen when player starts the game
+            socket.on(_self.getRoom().getId() + '/' + _self.getId() + '/startGame', () => {
+                //do something here
+            });
         });
 
         // Listen when player joins a room
         socket.on(_self.getId() + '/joinRoom', ($roomId) => {
-
+            var room = lobby.getRoom($roomId);
+            _self.setRoom(room);
         });
 
         // Listen when player leaves a room
@@ -113,6 +133,13 @@ module.exports = function ($socket) {
             _self.setRoom(null);
         });
 
+        // Remove player from stack upon disconnection
+        socket.on('disconnect', () => {
+            lobby.removePlayer(_self);
+        });
+
         return _self;
-    }
+    };
+
+    _self.listenToHomeScreenInputs();
 };
